@@ -1,0 +1,13 @@
+@{
+    ViewData["Title"] = "Goodbye";
+    var messages = ViewData["Messages"] as List<string>;
+}
+
+<h3>Goodbye Page</h3>
+
+<ul>
+    @foreach (var msg in messages)
+    {
+        <li>@msg</li>
+    }
+</ul>

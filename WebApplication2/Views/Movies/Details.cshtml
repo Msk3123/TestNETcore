@@ -1,0 +1,36 @@
+@model WebApplication2.Models.Movie
+
+@{
+    ViewData["Title"] = "Деталі фільму";
+}
+
+<h1>Деталі фільму</h1>
+
+<div>
+    <h4>@Model.Title</h4>
+    <hr />
+    
+    <table class="table">
+        <tr>
+            <th>Назва:</th>
+            <td>@Model.Title</td>
+        </tr>
+        <tr>
+            <th>Дата виходу:</th>
+            <td>@Model.ReleaseDate.ToString("dd.MM.yyyy")</td>
+        </tr>
+        <tr>
+            <th>Жанр:</th>
+            <td>@Model.Genre</td>
+        </tr>
+        <tr>
+            <th>Ціна:</th>
+            <td>@Model.Price.ToString("C")</td>
+        </tr>
+    </table>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Редагувати</a>
+    <a asp-action="Index" class="btn btn-secondary">Назад до списку</a>
+</div>
