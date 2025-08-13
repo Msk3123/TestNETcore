@@ -1,0 +1,48 @@
+@model WebApplication2.Models.CalculatorModel
+
+@{
+    ViewData["Title"] = "Calculate";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    <h1>Розрахунок</h1>
+    <p>Це тестова сторінка для розрахунку</p>
+    <p>Пока що тут нічого немає, але планую додати функціонал для розрахунків</p>
+    <p>Можливо це буде калькулятор або щось подібне</p>
+    <form asp-action="Calculate" method="post">
+        <div>
+            <p> Перше число</p>
+            <input asp-for="A" type="number"/>
+        </div>
+        <div>
+            <p> Друге число</p>
+            <input asp-for="B" type="number"/>
+        </div>
+        <div>
+            <p>Операція</p>
+            <select asp-for="Operation">
+                <option value="+">Додавання</option>
+                <option value="-">Віднімання</option>
+                <option value="*">Множення</option>
+                <option value="/">Ділення</option>
+            </select>
+        </div>
+        <br>
+        <button>Розрахувати</button>
+    </form>
+    @if (Model?.Result != 0 || ViewBag.ShowResult == true)
+    {
+        <div style="margin-top: 20px; padding: 10px; background-color: #1a1d20; border: 1px solid #007bff;">
+            <h3>Результат: @Model.A @Model.Operation @Model.B = @Model.Result</h3>
+        </div>
+    }
+</div>
+</body>
+</html>

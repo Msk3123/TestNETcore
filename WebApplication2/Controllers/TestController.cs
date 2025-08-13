@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using WebApplication2.Models;
 
 namespace WebApplication2.Controllers
 {
@@ -20,6 +21,33 @@ namespace WebApplication2.Controllers
             ViewData["Messages"] = messages;
             return View();
         }
+        [HttpGet]
+        public IActionResult Calculate()
+        {
+            return View(new CalculatorModel());
+        }
 
+        [HttpPost]
+        public IActionResult Calculate(CalculatorModel model)
+        {
+            
+            switch (model.Operation)
+            {
+                case "+":
+                    model.Result = model.A + model.B;
+                    break;
+                case "-":
+                    model.Result = model.A - model.B;
+                    break;
+                case "*":
+                    model.Result = model.A * model.B;
+                    break;
+                case "/":
+                    model.Result = model.B != 0 ? model.A / model.B : 0;
+                    break;
+            }
+            ViewBag.ShowResult = true;
+            return View(model);
+        }
     }
 }

@@ -335,3 +335,4 @@ D:\Programiring\WebApplication2\WebApplication2\obj\Debug\net9.0\scopedcss\Views
 D:\Programiring\WebApplication2\WebApplication2\obj\Debug\net9.0\compressed\sde506kbqk-vtot1b487r.gz
 D:\Programiring\WebApplication2\WebApplication2\obj\Debug\net9.0\compressed\fp9il18uij-gogivores9.gz
 D:\Programiring\WebApplication2\WebApplication2\obj\Debug\net9.0\compressed\lohozebfj0-gogivores9.gz
+D:\Programiring\WebApplication2\WebApplication2\obj\Debug\net9.0\WebApplication2.sourcelink.json
