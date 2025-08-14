@@ -35,10 +35,21 @@ public class MoviesController : Controller
         return View(movie);
     }
     
-    // GET: Movies
-    public async Task<IActionResult> Index()
+    [HttpPost]
+    public string Index(string searchString, bool notUsed)
     {
-        return View(await _context.Movie.ToListAsync());
+        return "From [HttpPost]Index: filter on " + searchString;
+    }
+    public async Task<IActionResult> Index(string? id)
+    {
+        IQueryable<Movie> query = _context.Movie; // DbSet<Movie> як IQueryable
+
+        if (!string.IsNullOrWhiteSpace(id))
+            query = query.Where(x => x.Title != null &&
+                                     EF.Functions.Like(x.Title, $"%{id}%"));
+
+        var items = await query.AsNoTracking().ToListAsync(); // читання — без трекінгу
+        return View(items);
     }
     
     public IActionResult Create()
