@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.Data;
 using WebApplication2.Models;
-
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace WebApplication2.Controllers;
 
 public class MoviesController : Controller
@@ -40,16 +40,37 @@ public class MoviesController : Controller
     {
         return "From [HttpPost]Index: filter on " + searchString;
     }
-    public async Task<IActionResult> Index(string? id)
+    public async Task<IActionResult> Index(string movieGenre, string searchString)
     {
-        IQueryable<Movie> query = _context.Movie; // DbSet<Movie> як IQueryable
+        if (_context.Movie == null)
+        {
+            return Problem("Entity set 'MvcMovieContext.Movie'  is null.");
+        }
 
-        if (!string.IsNullOrWhiteSpace(id))
-            query = query.Where(x => x.Title != null &&
-                                     EF.Functions.Like(x.Title, $"%{id}%"));
+        // Use LINQ to get list of genres.
+        IQueryable<string> genreQuery = from m in _context.Movie
+            orderby m.Genre
+            select m.Genre;
+        var movies = from m in _context.Movie
+            select m;
 
-        var items = await query.AsNoTracking().ToListAsync(); // читання — без трекінгу
-        return View(items);
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            movies = movies.Where(s => s.Title!.ToUpper().Contains(searchString.ToUpper()));
+        }
+
+        if (!string.IsNullOrEmpty(movieGenre))
+        {
+            movies = movies.Where(x => x.Genre == movieGenre);
+        }
+
+        var movieGenreVM = new MovieGenreViewModel
+        {
+            Genres = new SelectList(await genreQuery.Distinct().ToListAsync()),
+            Movies = await movies.ToListAsync()
+        };
+
+        return View(movieGenreVM);
     }
     
     public IActionResult Create()
